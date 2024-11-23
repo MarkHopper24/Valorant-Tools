@@ -1,4 +1,4 @@
-name: Run PowerShell Script Hourly
+name: Send Valorant Stats to TRMNL hourly
 env:
   valorant_api_key: ${{ secrets.ValorantApiKey }}
   plugin_id: ${{ secrets.Mark_Trmnl_Plugin_Id }}
