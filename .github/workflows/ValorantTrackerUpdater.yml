@@ -2,8 +2,9 @@ name: Run PowerShell Script Hourly
 env:
   valorant_api_key: ${{ secrets.ValorantApiKey }}
   plugin_id: ${{ secrets.Mark_Trmnl_Plugin_Id }}
-on:
-  workflow_dispatch
+on: 
+  schedule: 
+  - cron: '0 * * * *'
 jobs:     
   run-script:
     runs-on: windows-latest
