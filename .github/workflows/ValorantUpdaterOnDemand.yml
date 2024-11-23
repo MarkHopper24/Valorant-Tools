@@ -12,5 +12,5 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run PowerShell script
-      run: .\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:plugin_id" -APIKey valorant_api_key -username sharkhopper -tagline bossy
+      run: .\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:plugin_id" -APIKey "$env:valorant_api_key" -username "sharky big time" -tagline "bossy"
       shell: pwsh
