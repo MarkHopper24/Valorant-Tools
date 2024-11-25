@@ -183,10 +183,8 @@ function Get-LastMatches {
         $match.players.all_players | Where-Object { $_.name -eq $username -and $_.tag -eq $tagline } | ForEach-Object {
             $thisMatch = $_
 
-            $timestamp = $match.metadata.game_start 
-            $date = Get-Date -Date ([datetime]'1970-01-01' + [timespan]::FromSeconds($timestamp))
-            $GameStart = $date.ToLocalTime()
-            $GameStart = $GameStart.ToString("MM/dd hh:mm tt")
+            $date = (Get-Date -Date ([datetime]'1970-01-01' + [timespan]::FromSeconds($match.metadata.game_star))).AddHours(-6)
+            $GameStart = $date.ToString("MM/dd hh:mm tt")
 
             $TeamColor = $thisMatch.team
             $Details = Get-MatchDetails -matchId $match.metadata.matchid
