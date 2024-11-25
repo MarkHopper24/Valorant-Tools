@@ -58,8 +58,7 @@ Function Get-MatchHistory {
     $MatchHistoryResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
 
     if ($MatchHistoryResponse.status -ne 200) {
-        Write-Host "Match history does not exist"
-        return
+        return $MatchHistoryResponse
     }
     else {
         return $MatchHistoryResponse.data
@@ -262,7 +261,7 @@ Function New-TrmnlRequestBody {
     return $Output
 }
 
-Function Invoke-Trmnl-PostRequest {
+Function Invoke-TrmnlPostRequest {
     param(
         [Parameter(Mandatory = $true)]
         [hashtable]$Body
@@ -284,4 +283,4 @@ Function Invoke-Trmnl-PostRequest {
 }
 
 $Body = New-TrmnlRequestBody -username $username -tag $tagline
-Invoke-Trmnl-PostRequest -Body $Body
+Invoke-TrmnlPostRequest -Body $Body
