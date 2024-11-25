@@ -4,8 +4,9 @@ env:
   mark_trmnl_plugin_id: ${{ secrets.MARK_TRMNL_PLUGIN_ID }}
   jess_trmnl_plugin_id: ${{ secrets.JESS_TRMNL_PLUGIN_ID }}
 on: 
-  schedule: 
+  schedule:
   - cron: '0 23,0-7 * * *'
+  workflow_dispatch:
 jobs:     
   run-script:
     runs-on: windows-latest
