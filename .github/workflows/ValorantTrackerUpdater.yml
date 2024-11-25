@@ -1,12 +1,8 @@
 name: Send Valorant Stats to TRMNL hourly
 env:
   valorant_api_key: ${{ secrets.ValorantApiKey }}
-  mark_trmnl_plugin_id: ${{ secrets.MARK_TRMNL_PLUGIN_ID }}
-  jess_trmnl_plugin_id: ${{ secrets.JESS_TRMNL_PLUGIN_ID }}
-  valorant_username1: ${{ vars.VALORANT_USERNAME1 }}
-  valorant_username2: ${{ vars.VALORANT_USERNAME2  }}
-  valorant_tagline1: ${{ vars.VALORANT_TAGLINE1 }}
-  valorant_tagline2: ${{ vars.VALORANT_TAGLINE2  }}
+  trmnl_plugin_id1: ${{ secrets.TRMNL_PLUGIN_ID1 }}
+  trmnl_plugin_id2: ${{ secrets.TRMNL_PLUGIN_ID2 }}
 on: 
   schedule:
   - cron: '0 23,0-7 * * *'
@@ -19,9 +15,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run PowerShell script
-      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:mark_trmnl_plugin_id" -APIKey "$env:valorant_api_key" -username "$env.valorant_username1" -tagline "$env:valorant_tagline1" > $null
+      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id1" -APIKey "$env:valorant_api_key" -username "$VALORANT_USERNAME1" -tagline "$VALORANT_TAGLINE1" > $null
       shell: pwsh
 
     - name: Run PowerShell script
-      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:jess_trmnl_plugin_id" -APIKey "$env:valorant_api_key" -username "$env.valorant_username2"  -tagline "$env:valorant_tagline2"  > $null
+      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id2" -APIKey "$env:valorant_api_key" -username "$VALORANT_USERNAME2"  -tagline "$VALORANT_TAGLINE2"  > $null
       shell: pwsh
