@@ -15,9 +15,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run PowerShell script
-      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id1" -APIKey "$env:valorant_api_key" -username "$var.VALORANT_USERNAME1" -tagline "$VALORANT_TAGLINE1" > $null
+      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id1" -APIKey "$env:valorant_api_key" -username "$vars:VALORANT_USERNAME1" -tagline "$VALORANT_TAGLINE1" > $null
       shell: pwsh
 
     - name: Run PowerShell script
-      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id2" -APIKey "$env:valorant_api_key" -username "vars.$VALORANT_USERNAME2"  -tagline "$VALORANT_TAGLINE2"  > $null
+      run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id2" -APIKey "$env:valorant_api_key" -username "vars:$VALORANT_USERNAME2"  -tagline "$VALORANT_TAGLINE2"  > $null
       shell: pwsh
