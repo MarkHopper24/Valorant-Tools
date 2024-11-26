@@ -1,0 +1,135 @@
+<div class="layout layout--col col--center">
+    <span class="value value--small">{{ Name }}</span>
+    <br>
+    <div class="grid grid--cols-4">
+        <div class="item">
+            <div class="meta"></div>
+            <div class="content">
+                <span class="title title--small">{{CurrentRating}}</span>
+                <div class="flex gap--small">
+                    <span class="label label--small">Current Rank</span>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="meta"></div>
+            <div class="content">
+                <span class="title title--small">{{ PeakRating }}</span>
+                <div class="flex gap--small">
+                    <span class="label label--small">Peak Rank</span>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="meta"></div>
+            <div class="content">
+                <span class="title title--small">{{ TotalCompetitiveGames }}</span>
+                <div class="flex gap--small">
+                    <span class="label label--small">Total Competitive Games</span>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="meta"></div>
+            <div class="content">
+                <span class="title title--small">{{ WinRate }}</span>
+                <div class="flex gap--small">
+                    <span class="label label--small">Competitive Win%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table" layout--bottom>
+        <thead>
+            <tr>
+                <th><span class="label label--small">W/L</span></th>
+                <th><span class="label label--small">Date</span></th>
+                <th><span class="label label--small">Map</span></th>
+                <th><span class="label label--small">Mode</span></th>
+                <th><span class="label label--small">Agent</span></th>
+                <th><span class="label label--small">K</span></th>
+                <th><span class="label label--small">D</span></th>
+                <th><span class="label label--small">A</span></th>
+                <th><span class="label label--small">Score</span></th>
+                <th><span class="label label--small">Head Shots</span></th>
+                <th><span class="label label--small">Body Shots</span></th>
+                <th><span class="label label--small">Leg Shots</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="description">{{ Outcome_0 }}</span></td>
+                <td><span class="description">{{ Game_Start_0 }}</span></td>
+                <td><span class="description">{{ Map_0 }}</span></td>
+                <td><span class="description">{{ Mode_0 }}</span></td>
+                <td><span class="description">{{ Agent_0 }}</span></td>
+                <td><span class="description">{{ Kills_0 }}</span></td>
+                <td><span class="description">{{ Deaths_0 }}</span></td>
+                <td><span class="description">{{ Assists_0 }}</span></td>
+                <td><span class="description">{{ Score_0 }}</span></td>
+                <td><span class="description">{{ Head_Shots_0 }}</span></td>
+                <td><span class="description">{{ Body_Shots_0 }}</span></td>
+                <td><span class="description">{{ Leg_Shots_0 }}</span></td>
+            </tr>
+            <tr>
+                <td><span class="description">{{ Outcome_1 }}</span></td>
+                <td><span class="description">{{ Game_Start_1 }}</span></td>
+                <td><span class="description">{{ Map_1 }}</span></td>
+                <td><span class="description">{{ Mode_1 }}</span></td>
+                <td><span class="description">{{ Agent_1 }}</span></td>
+                <td><span class="description">{{ Kills_1 }}</span></td>
+                <td><span class="description">{{ Deaths_1 }}</span></td>
+                <td><span class="description">{{ Assists_1 }}</span></td>
+                <td><span class="description">{{ Score_1 }}</span></td>
+                <td><span class="description">{{ Head_Shots_1 }}</span></td>
+                <td><span class="description">{{ Body_Shots_1 }}</span></td>
+                <td><span class="description">{{ Leg_Shots_1 }}</span></td>
+        </tbody>
+        <tr>
+            <td><span class="description">{{ Outcome_2 }}</span></td>
+            <td><span class="description">{{ Game_Start_2 }}</span></td>
+            <td><span class="description">{{ Map_2 }}</span></td>
+            <td><span class="description">{{ Mode_2 }}</span></td>
+            <td><span class="description">{{ Agent_2 }}</span></td>
+            <td><span class="description">{{ Kills_2 }}</span></td>
+            <td><span class="description">{{ Deaths_2 }}</span></td>
+            <td><span class="description">{{ Assists_2 }}</span></td>
+            <td><span class="description">{{ Score_2 }}</span></td>
+            <td><span class="description">{{ Head_Shots_2 }}</span></td>
+            <td><span class="description">{{ Body_Shots_2 }}</span></td>
+            <td><span class="description">{{ Leg_Shots_2 }}</span></td>
+        </tr>
+        <tr>
+            <td><span class="description">{{ Outcome_3 }}</span></td>
+            <td><span class="description">{{ Game_Start_3 }}</span></td>
+            <td><span class="description">{{ Map_3 }}</span></td>
+            <td><span class="description">{{ Mode_3 }}</span></td>
+            <td><span class="description">{{ Agent_3 }}</span></td>
+            <td><span class="description">{{ Kills_3 }}</span></td>
+            <td><span class="description">{{ Deaths_3 }}</span></td>
+            <td><span class="description">{{ Assists_3 }}</span></td>
+            <td><span class="description">{{ Score_3 }}</span></td>
+            <td><span class="description">{{ Head_Shots_3 }}</span></td>
+            <td><span class="description">{{ Body_Shots_3 }}</span></td>
+            <td><span class="description">{{ Leg_Shots_3 }}</span></td>
+        </tr>
+        <tr>
+            <td><span class="description">{{ Outcome_4 }}</span></td>
+            <td><span class="description">{{ Game_Start_4 }}</span></td>
+            <td><span class="description">{{ Map_4 }}</span></td>
+            <td><span class="description">{{ Mode_4 }}</span></td>
+            <td><span class="description">{{ Agent_4 }}</span></td>
+            <td><span class="description">{{ Kills_4 }}</span></td>
+            <td><span class="description">{{ Deaths_4 }}</span></td>
+            <td><span class="description">{{ Assists_4 }}</span></td>
+            <td><span class="description">{{ Score_4 }}</span></td>
+            <td><span class="description">{{ Head_Shots_4 }}</span></td>
+            <td><span class="description">{{ Body_Shots_4 }}</span></td>
+            <td><span class="description">{{ Leg_Shots_4 }}</span></td>
+        </tr>
+    </table>
+</div>
+<div class="title_bar">
+    <img class="image" src="https://www.svgrepo.com/show/424912/valorant-logo-play-2.svg" />
+    <span class="title">Valorant Tracker</span>
+</div>
