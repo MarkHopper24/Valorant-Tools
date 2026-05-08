@@ -7,7 +7,7 @@ env:
   
   valorant_username1: ${{ vars.VALORANT_USERNAME1 }}
   valorant_username2: ${{ vars.VALORANT_USERNAME2  }}
-  valorant_username3: ${{ vars.VALORANT_USERNAM3  }}
+  valorant_username3: ${{ vars.VALORANT_USERNAME3  }}
 
   valorant_tagline1: ${{ vars.VALORANT_TAGLINE1 }}
   valorant_tagline2: ${{ vars.VALORANT_TAGLINE2  }}
