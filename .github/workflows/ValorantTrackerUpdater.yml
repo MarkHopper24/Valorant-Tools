@@ -11,7 +11,7 @@ env:
 
   valorant_tagline1: ${{ vars.VALORANT_TAGLINE1 }}
   valorant_tagline2: ${{ vars.VALORANT_TAGLINE2  }}
-  valorant_tagline3: ${{ vars.VALORANT_TAGLINE2  }}
+  valorant_tagline3: ${{ vars.VALORANT_TAGLINE3  }}
 
 on: 
   schedule:
