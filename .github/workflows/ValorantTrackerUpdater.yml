@@ -35,6 +35,6 @@ jobs:
       shell: pwsh
 
     - name: Run PowerShell script for user 3
-      if: ${{ env.trmnl_plugin_id2 && env.valorant_username3 && env.valorant_tagline3 }}
+      if: ${{ env.trmnl_plugin_id3 && env.valorant_username3 && env.valorant_tagline3 }}
       run: .\TRMNL\Trmnl_ValorantTracker.ps1 -TrmnlPluginId "$env:trmnl_plugin_id3" -APIKey "$env:valorant_api_key" -username $env:valorant_username3  -tagline "$env:valorant_tagline3" > $null
       shell: pwsh
