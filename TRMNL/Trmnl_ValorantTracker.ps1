@@ -27,7 +27,7 @@ Function Get-AccountData {
 
     $uri = "https://api.henrikdev.xyz/valorant/v1/account/$username/$tagline"
     $AccountResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
-    Start-Sleep -Seconds 120
+    Start-Sleep -Seconds 30
 
     if ($AccountResponse.status -ne 200) {
         Write-Host "Account does not exist"
@@ -47,7 +47,7 @@ Function Get-MatchHistory {
 
     $uri = "https://api.henrikdev.xyz/valorant/v3/matches/$region/$username/$tagline"
     $MatchHistoryResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
-    Start-Sleep -Seconds 120
+    Start-Sleep -Seconds 30
 
     if ($MatchHistoryResponse.status -ne 200) {
         return $MatchHistoryResponse
@@ -67,7 +67,7 @@ Function Get-MatchDetails {
 
     $uri = "https://api.henrikdev.xyz/valorant/v4/match/$region/$matchId"
     $MatchDetailsResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
-    Start-Sleep -Seconds 120
+    Start-Sleep -Seconds 30
 
     if ($MatchDetailsResponse.status -ne 200) {
         Write-Host "Match does not exist"
@@ -87,7 +87,7 @@ Function Get-MMRR {
 
     $uri = "https://api.henrikdev.xyz/valorant/v3/mmr/na/pc/$username/$tagline"
     $MMRRResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
-    Start-Sleep -Seconds 120
+    Start-Sleep -Seconds 30
 
     if ($MMRRResponse.status -ne 200) {
         Write-Host "MMRR does not exist"
@@ -223,7 +223,6 @@ Function Invoke-TrmnlPostRequest {
     $TrmnlBody = @{ "merge_variables" = $Body }
 
     Invoke-RestMethod -Uri $uri -Headers $TrmnlHeaders -Method Post -Body ($TrmnlBody | ConvertTo-Json)
-    Start-Sleep -Seconds 120
 }
 
 $Body = New-TrmnlRequestBody -username $username -tag $tagline
