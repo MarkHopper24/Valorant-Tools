@@ -1,6 +1,5 @@
 #Set script parameters
 param(
-    #API Key
     [Parameter(Mandatory = $true)]
     [string]$TrmnlPluginId,
     [Parameter(Mandatory = $true)]
@@ -17,23 +16,19 @@ if (-not $region) {
     $region = "na"
 }
 
-## valorant header
 $headers = @{}
 $headers.Add("Authorization", "$APIKey")
 
 Function Get-AccountData {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory = $true)]
         [string]$tagline
     )
 
     $uri = "https://api.henrikdev.xyz/valorant/v1/account/$username/$tagline"
-
     $AccountResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+    Start-Sleep -Seconds 120
 
-    #If status == 200, then the account exists
     if ($AccountResponse.status -ne 200) {
         Write-Host "Account does not exist"
         return
@@ -45,17 +40,14 @@ Function Get-AccountData {
 
 Function Get-MatchHistory {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory = $true)]
         [string]$tagline,
-        [Parameter(Mandatory = $true)]
         [string]$region
     )
 
     $uri = "https://api.henrikdev.xyz/valorant/v3/matches/$region/$username/$tagline"
-
     $MatchHistoryResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+    Start-Sleep -Seconds 120
 
     if ($MatchHistoryResponse.status -ne 200) {
         return $MatchHistoryResponse
@@ -67,24 +59,20 @@ Function Get-MatchHistory {
 
 Function Get-MatchDetails {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$matchId,
-        [Parameter(Mandatory = $false)]
         [string]$region
     )
-    if (-not $region) {
-        $region = "na"
-    }
+
+    if (-not $region) { $region = "na" }
 
     $uri = "https://api.henrikdev.xyz/valorant/v4/match/$region/$matchId"
-
     $MatchDetailsResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+    Start-Sleep -Seconds 120
 
     if ($MatchDetailsResponse.status -ne 200) {
         Write-Host "Match does not exist"
         return
     }
-
     else {
         return $MatchDetailsResponse.data
     }
@@ -92,23 +80,19 @@ Function Get-MatchDetails {
 
 Function Get-MMRR {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory = $true)]
         [string]$tagline,
-        [Parameter(Mandatory = $false)]
         [string]$region
     )
 
     $uri = "https://api.henrikdev.xyz/valorant/v3/mmr/na/pc/$username/$tagline"
-
     $MMRRResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+    Start-Sleep -Seconds 120
 
     if ($MMRRResponse.status -ne 200) {
         Write-Host "MMRR does not exist"
         return
     }
-
     else {
         return $MMRRResponse.data
     }
@@ -116,19 +100,12 @@ Function Get-MMRR {
 
 Function Get-CareerStats {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory = $true)]
         [string]$tagline,
-        [Parameter(Mandatory = $false)]
         [string]$region
     )
 
-    $Name = $username + "#" + $tagline
-
-    if (-not $region) {
-        $region = "na"
-    }
+    if (-not $region) { $region = "na" }
 
     $MMRR = Get-MMRR -username $username -tagline $tagline -region $region
 
@@ -136,23 +113,17 @@ Function Get-CareerStats {
     $TotalWins = 0
 
     $MMRR.seasonal | ForEach-Object {
-        $Season = $_
-        $TotalGames += $Season.games
-        $TotalWins += $Season.wins
-    } 
+        $TotalGames += $_.games
+        $TotalWins += $_.wins
+    }
 
-    $WinRate = $TotalWins / $TotalGames
-    $WinRate = [math]::Round($WinRate, 2)
-    $WinRate = $WinRate * 100
-    $WinRate = $WinRate.ToString() + "%"
-
-    $PeakRating = $MMRR.peak.tier.name
-    $CurrentRating = $MMRR.current.tier.name
+    $WinRate = [math]::Round(($TotalWins / $TotalGames), 2) * 100
+    $WinRate = "$WinRate%"
 
     $CareerStats = @{
-        Name                  = $Name
-        CurrentRating         = $CurrentRating
-        PeakRating            = $PeakRating
+        Name                  = "$username#$tagline"
+        CurrentRating         = $MMRR.current.tier.name
+        PeakRating            = $MMRR.peak.tier.name
         TotalCompetitiveGames = $TotalGames
         TotalWins             = $TotalWins
         WinRate               = $WinRate
@@ -161,125 +132,98 @@ Function Get-CareerStats {
     return $CareerStats
 }
 
-function Get-LastMatches {
+Function Get-LastMatches {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory = $true)]
         [string]$tagline,
-        [Parameter(Mandatory = $false)]
         [string]$region
     )
 
-    if (-not $region) {
-        $region = "na"
-    }
+    if (-not $region) { $region = "na" }
 
     $MatchesOutput = @()
-
     $MatchHistory = Get-MatchHistory -username $username -tagline $tagline -region $region
+
     foreach ($match in $MatchHistory) {
-        $match.players.all_players | Where-Object { $_.name -eq $username -and $_.tag -eq $tagline } | ForEach-Object {
-            $thisMatch = $_
+        $match.players.all_players |
+            Where-Object { $_.name -eq $username -and $_.tag -eq $tagline } |
+            ForEach-Object {
 
-            $date = (Get-Date -Date ([datetime]'1970-01-01' + [timespan]::FromSeconds($match.metadata.game_start))).AddHours(-6)
-            $GameStart = $date.ToString("MM/dd hh:mm tt")
+                $thisMatch = $_
+                $date = (Get-Date -Date ([datetime]'1970-01-01' + [timespan]::FromSeconds($match.metadata.game_start))).AddHours(-6)
+                $GameStart = $date.ToString("MM/dd hh:mm tt")
 
-            $TeamColor = $thisMatch.team
-            $Details = Get-MatchDetails -matchId $match.metadata.matchid
-            $WinningTeam = $Details.teams | Where-Object { $_.won -eq $true }
-            if ($WinningTeam.team_id -eq $TeamColor) {
-                $Outcome = "Win"
-            }
-            else {
-                $Outcome = "Loss"
-            }
+                $Details = Get-MatchDetails -matchId $match.metadata.matchid
+                $WinningTeam = $Details.teams | Where-Object { $_.won -eq $true }
 
-            $Agent = $thisMatch.character
+                $Outcome = if ($WinningTeam.team_id -eq $thisMatch.team) { "Win" } else { "Loss" }
 
-            $Stats = $thisMatch.stats
-
-            $MatchInformation = @{
-                Id        = $match.metadata.matchid;
-                Outcome   = $Outcome;
-                GameStart = $GameStart;
-                Map       = $match.metadata.map;
-                Mode      = $match.metadata.mode;
-                Agent     = $Agent;
-                Kills     = $Stats.kills;
-                Deaths    = $Stats.deaths;
-                Assists   = $Stats.assists;
-                Score     = $Stats.score;
-                BodyShots = $Stats.bodyshots;
-                HeadShots = $Stats.headshots;
-                LegShots  = $Stats.legshots;
-            };
-
-            $MatchesOutput += $MatchInformation
+                $MatchesOutput += @{
+                    Id        = $match.metadata.matchid
+                    Outcome   = $Outcome
+                    GameStart = $GameStart
+                    Map       = $match.metadata.map
+                    Mode      = $match.metadata.mode
+                    Agent     = $thisMatch.character
+                    Kills     = $thisMatch.stats.kills
+                    Deaths    = $thisMatch.stats.deaths
+                    Assists   = $thisMatch.stats.assists
+                    Score     = $thisMatch.stats.score
+                    BodyShots = $thisMatch.stats.bodyshots
+                    HeadShots = $thisMatch.stats.headshots
+                    LegShots  = $thisMatch.stats.legshots
+                }
         }
     }
+
     return $MatchesOutput
 }
 
 Function New-TrmnlRequestBody {
     param(
-        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory = $true)]
         [string]$tag
     )
 
     $Output = @{}
-
     $LastMatches = Get-LastMatches -username $username -tagline $tag
     $CareerStats = Get-CareerStats -username $username -tagline $tag
 
     for ($i = 0; $i -lt $LastMatches.Count; $i++) {
-        $iteratorString = $i.ToString()
-
         $Match = $LastMatches[$i]
-        $MatchBodyDetails = @{
-            "Match_ID_$iteratorString"   = $Match.Id
-            "Outcome_$iteratorString"    = $Match.Outcome
-            "Game_Start_$iteratorString" = $Match.GameStart
-            "Map_$iteratorString"        = $Match.Map
-            "Mode_$iteratorString"       = $Match.Mode
-            "Agent_$iteratorString"      = $Match.Agent
-            "Kills_$iteratorString"      = $Match.Kills
-            "Deaths_$iteratorString"     = $Match.Deaths
-            "Assists_$iteratorString"    = $Match.Assists
-            "Score_$iteratorString"      = $Match.Score
-            "Body_Shots_$iteratorString" = $Match.BodyShots
-            "Head_Shots_$iteratorString" = $Match.HeadShots
-            "Leg_Shots_$iteratorString"  = $Match.LegShots
+        $Output += @{
+            "Match_ID_$i"   = $Match.Id
+            "Outcome_$i"    = $Match.Outcome
+            "Game_Start_$i" = $Match.GameStart
+            "Map_$i"        = $Match.Map
+            "Mode_$i"       = $Match.Mode
+            "Agent_$i"      = $Match.Agent
+            "Kills_$i"      = $Match.Kills
+            "Deaths_$i"     = $Match.Deaths
+            "Assists_$i"    = $Match.Assists
+            "Score_$i"      = $Match.Score
+            "Body_Shots_$i" = $Match.BodyShots
+            "Head_Shots_$i" = $Match.HeadShots
+            "Leg_Shots_$i"  = $Match.LegShots
         }
-        $Output += $MatchBodyDetails
     }
 
     $Output += $CareerStats
-
     return $Output
 }
 
 Function Invoke-TrmnlPostRequest {
     param(
-        [Parameter(Mandatory = $true)]
         [hashtable]$Body
     )
 
     $uri = "https://usetrmnl.com/api/custom_plugins/$TrmnlPluginId"
+    $TrmnlHeaders = @{ "Content-Type" = "application/json" }
 
-    $TrmnlHeaders = @{
-        "Content-Type" = "application/json"
-    }
-
-    $TrmnlBody = @{
-        "merge_variables" = $Body
-    }
-
-    $TrmnlBody | ConvertTo-Json
+    $TrmnlBody = @{ "merge_variables" = $Body }
 
     Invoke-RestMethod -Uri $uri -Headers $TrmnlHeaders -Method Post -Body ($TrmnlBody | ConvertTo-Json)
+    Start-Sleep -Seconds 120
 }
 
 $Body = New-TrmnlRequestBody -username $username -tag $tagline
