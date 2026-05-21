@@ -42,10 +42,11 @@ Function Get-MatchHistory {
     param(
         [string]$username,
         [string]$tagline,
-        [string]$region
+        [string]$region,
+        [int]$size = 12
     )
 
-    $uri = "https://api.henrikdev.xyz/valorant/v3/matches/$region/$username/$tagline"
+    $uri = "https://api.henrikdev.xyz/valorant/v3/matches/$region/$username/$tagline`?size=$size"
     $MatchHistoryResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
     Start-Sleep -Seconds 30
 
@@ -142,7 +143,7 @@ Function Get-LastMatches {
     if (-not $region) { $region = "na" }
 
     $MatchesOutput = @()
-    $MatchHistory = Get-MatchHistory -username $username -tagline $tagline -region $region
+    $MatchHistory = Get-MatchHistory -username $username -tagline $tagline -region $region -size 12
 
     foreach ($match in $MatchHistory) {
         $match.players.all_players |
