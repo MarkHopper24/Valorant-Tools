@@ -122,12 +122,12 @@ Function Get-CareerStats {
     $WinRate = "$WinRate%"
 
     $CareerStats = @{
-        Name                  = "$username#$tagline"
-        CurrentRating         = $MMRR.current.tier.name
-        PeakRating            = $MMRR.peak.tier.name
-        TotalCompetitiveGames = $TotalGames
-        TotalWins             = $TotalWins
-        WinRate               = $WinRate
+        N  = "$username#$tagline"
+        CR = $MMRR.current.tier.name
+        PR = $MMRR.peak.tier.name
+        TG = $TotalGames
+        TW = $TotalWins
+        WR = $WinRate
     }
 
     return $CareerStats
@@ -160,19 +160,19 @@ Function Get-LastMatches {
                 $Outcome = if ($WinningTeam.team_id -eq $thisMatch.team) { "Win" } else { "Loss" }
 
                 $MatchesOutput += @{
-                    Id        = $match.metadata.matchid
-                    Outcome   = $Outcome
-                    GameStart = $GameStart
-                    Map       = $match.metadata.map
-                    Mode      = $match.metadata.mode
-                    Agent     = $thisMatch.character
-                    Kills     = $thisMatch.stats.kills
-                    Deaths    = $thisMatch.stats.deaths
-                    Assists   = $thisMatch.stats.assists
-                    Score     = $thisMatch.stats.score
-                    BodyShots = $thisMatch.stats.bodyshots
-                    HeadShots = $thisMatch.stats.headshots
-                    LegShots  = $thisMatch.stats.legshots
+                    Id = $match.metadata.matchid
+                    O  = $Outcome
+                    GS = $GameStart
+                    Mp = $match.metadata.map
+                    Md = $match.metadata.mode
+                    Ag = $thisMatch.character
+                    K  = $thisMatch.stats.kills
+                    D  = $thisMatch.stats.deaths
+                    A  = $thisMatch.stats.assists
+                    S  = $thisMatch.stats.score
+                    BS = $thisMatch.stats.bodyshots
+                    HS = $thisMatch.stats.headshots
+                    LS = $thisMatch.stats.legshots
                 }
         }
     }
@@ -193,18 +193,18 @@ Function New-TrmnlRequestBody {
     for ($i = 0; $i -lt $LastMatches.Count; $i++) {
         $Match = $LastMatches[$i]
         $Output += @{
-            "Outcome_$i"    = $Match.Outcome
-            "Game_Start_$i" = $Match.GameStart
-            "Map_$i"        = $Match.Map
-            "Mode_$i"       = $Match.Mode
-            "Agent_$i"      = $Match.Agent
-            "Kills_$i"      = $Match.Kills
-            "Deaths_$i"     = $Match.Deaths
-            "Assists_$i"    = $Match.Assists
-            "Score_$i"      = $Match.Score
-            "Body_Shots_$i" = $Match.BodyShots
-            "Head_Shots_$i" = $Match.HeadShots
-            "Leg_Shots_$i"  = $Match.LegShots
+            "O_$i"  = $Match.O
+            "GS_$i" = $Match.GS
+            "Mp_$i" = $Match.Mp
+            "Md_$i" = $Match.Md
+            "Ag_$i" = $Match.Ag
+            "K_$i"  = $Match.K
+            "D_$i"  = $Match.D
+            "A_$i"  = $Match.A
+            "S_$i"  = $Match.S
+            "BS_$i" = $Match.BS
+            "HS_$i" = $Match.HS
+            "LS_$i" = $Match.LS
         }
     }
 
