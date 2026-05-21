@@ -15,7 +15,7 @@ env:
 
 on: 
   schedule:
-  - cron: '0 23,0-7 * * *'
+  - cron: '0 20-23/2,0 * * *'
   workflow_dispatch:
 jobs:     
   run-script:
