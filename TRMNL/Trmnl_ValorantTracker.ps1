@@ -43,7 +43,7 @@ Function Get-MatchHistory {
         [string]$username,
         [string]$tagline,
         [string]$region,
-        [int]$size = 12
+        [int]$size = 11
     )
 
     $uri = "https://api.henrikdev.xyz/valorant/v3/matches/$region/$username/$tagline`?size=$size"
@@ -143,7 +143,7 @@ Function Get-LastMatches {
     if (-not $region) { $region = "na" }
 
     $MatchesOutput = @()
-    $MatchHistory = Get-MatchHistory -username $username -tagline $tagline -region $region -size 12
+    $MatchHistory = Get-MatchHistory -username $username -tagline $tagline -region $region -size 11
 
     foreach ($match in $MatchHistory) {
         $match.players.all_players |
@@ -193,7 +193,6 @@ Function New-TrmnlRequestBody {
     for ($i = 0; $i -lt $LastMatches.Count; $i++) {
         $Match = $LastMatches[$i]
         $Output += @{
-            "Match_ID_$i"   = $Match.Id
             "Outcome_$i"    = $Match.Outcome
             "Game_Start_$i" = $Match.GameStart
             "Map_$i"        = $Match.Map
