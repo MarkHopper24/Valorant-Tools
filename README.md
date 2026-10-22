@@ -1,6 +1,8 @@
 # Valorant-Tools
 This repository contains the source code, templates, and setup instructions for sending Valorant account game data to your TRMNL device using PowerShell and GitHub Actions.
 
+For an optional three-match recap card with commentary, two-player stat charts, and four TRMNL layouts, see [Last time on Valorant](TRMNL/LastTimeOnValorant/README.md). It has its own local setup and does not change the tracker or schedule described below.
+
 ![image](https://github.com/user-attachments/assets/d6207f75-9b81-4197-945d-f605eb43b67c)
 
 

@@ -1,0 +1,4 @@
+name: Last time on Valorant
+strategy: webhook
+framework_version: 3.4.0
+no_screen_padding: no

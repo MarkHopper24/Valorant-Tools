@@ -1,0 +1,10 @@
+{
+  "players": [
+    { "key": "p1", "name": "Player One", "riot": "ExampleOne#DEMO" },
+    { "key": "p2", "name": "Player Two", "riot": "ExampleTwo#DEMO" }
+  ],
+  "region": "na",
+  "scanSize": 10,
+  "timezone": "America/Chicago",
+  "target": { "projectId": "last-time-on-valorant", "pluginSettingId": 0, "deviceId": 0 }
+}
