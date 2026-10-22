@@ -1,0 +1,28 @@
+name: Last time on Valorant tests
+
+on:
+  pull_request:
+    paths:
+      - 'TRMNL/LastTimeOnValorant/**'
+      - '.github/workflows/last-time-on-valorant-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'TRMNL/LastTimeOnValorant/**'
+      - '.github/workflows/last-time-on-valorant-tests.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test with fictional data and mocked network calls
+        working-directory: TRMNL/LastTimeOnValorant
+        run: npm test

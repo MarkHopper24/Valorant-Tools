@@ -1,0 +1,9 @@
+config.local.json
+.state/
+.env
+.env.*
+!.env.example
+*.log
+*.lock
+*.tmp
+node_modules/
